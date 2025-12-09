@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="th" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <title>แผนพัฒนาตนเองรายวัน</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    /* Custom scrollbars */
+    .app-wrapper::-webkit-scrollbar {
+      width: 8px;
+    }
+    .app-wrapper::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .app-wrapper::-webkit-scrollbar-thumb {
+      background-color: rgba(0,0,0,0.15);
+      border-radius: 999px;
+    }
+    .focus-ring:focus-visible {
+      outline: 2px solid #c19a6b;
+      outline-offset: 2px;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full w-full m-0 p-0">
+  <div id="app-root" class="app-wrapper h-full w-full overflow-auto flex items-center justify-center">
+   <div id="planner-root" class="w-full h-full flex items-center justify-center px-4 py-4">
+    <main id="planner-card" class="w-full max-w-5xl h-full rounded-2xl shadow-lg flex flex-col"><!-- Header -->
+     <header class="w-full px-8 pt-6 pb-3 border-b flex flex-col gap-3" aria-label="ส่วนหัวแผน">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+       <div class="space-y-1">
+        <h1 id="main-title" class="font-bold tracking-wide uppercase">โปรแกรมพัฒนาตนเองรายวัน</h1>
+        <p id="subtitle-text" class="text-sm opacity-80">สร้างนิสัยดี ฝึกจิตใจ เสริมสร้างร่างกาย</p>
+       </div>
+       <div class="flex flex-col items-end gap-2"><label for="date-input" class="text-xs opacity-80">วันที่</label> <input id="date-input" type="text" aria-label="วันที่" placeholder="_____ / _____ / _____" class="focus-ring rounded-md px-3 py-1.5 text-xs border bg-transparent placeholder:opacity-60">
+       </div>
+      </div>
+     </header><!-- Content -->
+     <section class="flex-1 w-full px-6 pb-6 pt-3">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 h-full"><!-- LEFT COLUMN -->
+       <section aria-label="จิตใจและการวางแผน" class="flex flex-col gap-4"><!-- Morning Mindset -->
+        <article class="relative rounded-xl shadow-sm" aria-label="ส่วนจิตใจยามเช้า">
+         <div class="absolute inset-0 translate-x-[2px] translate-y-[2px] rounded-xl opacity-80 pointer-events-none" id="mm-shadow"></div>
+         <div class="relative rounded-xl border h-full flex flex-col overflow-hidden" id="mm-card">
+          <div class="px-4 py-2.5 flex items-center gap-2" id="mm-title-bar"><span aria-hidden="true">☀️</span>
+           <h2 id="mm-title" class="text-xs font-semibold tracking-wide uppercase">จิตใจยามเช้า</h2>
+          </div>
+          <div class="px-4 pb-3 pt-3 flex-1 flex flex-col gap-2"><label for="gratitude-1" id="mm-prompt" class="text-xs mb-1"> วันนี้ฉันขอบคุณสำหรับ: </label> <textarea id="gratitude-1" class="focus-ring w-full rounded-md border px-2.5 py-1.5 text-xs resize-none" rows="2"></textarea> <textarea id="gratitude-2" class="focus-ring w-full rounded-md border px-2.5 py-1.5 text-xs resize-none" rows="2"></textarea>
+          </div>
+         </div>
+        </article><!-- Laser Focus - Top 3 -->
+        <article class="relative rounded-xl shadow-sm" aria-label="ส่วนสิ่งสำคัญ 3 อันดับ">
+         <div class="absolute inset-0 translate-x-[2px] translate-y-[2px] rounded-xl opacity-80 pointer-events-none" id="lf-shadow"></div>
+         <div class="relative rounded-xl border h-full flex flex-col overflow-hidden" id="lf-card">
+          <div class="px-4 py-2.5 flex items-center gap-2" id="lf-title-bar"><span aria-hidden="true">🎯</span>
+           <h2 id="lf-title" class="text-xs font-semibold tracking-wide uppercase">สิ่งสำคัญ 3 อันดับแรก</h2>
+          </div>
+          <div class="px-4 pb-3 pt-3 flex-1 flex flex-col gap-2">
+           <ol class="space-y-2 text-xs">
+            <li class="flex items-center gap-2"><button type="button" class="focus-ring w-4 h-4 rounded-full border flex-shrink-0 flex items-center justify-center" data-role="circle-checkbox" aria-label="เลือกสิ่งสำคัญ 1"></button> <input type="text" class="focus-ring flex-1 rounded-md border px-2 py-1 text-xs" placeholder="สิ่งสำคัญอันดับ 1"></li>
+            <li class="flex items-center gap-2"><button type="button" class="focus-ring w-4 h-4 rounded-full border flex-shrink-0 flex items-center justify-center" data-role="circle-checkbox" aria-label="เลือกสิ่งสำคัญ 2"></button> <input type="text" class="focus-ring flex-1 rounded-md border px-2 py-1 text-xs" placeholder="สิ่งสำคัญอันดับ 2"></li>
+            <li class="flex items-center gap-2"><button type="button" class="focus-ring w-4 h-4 rounded-full border flex-shrink-0 flex items-center justify-center" data-role="circle-checkbox" aria-label="เลือกสิ่งสำคัญ 3"></button> <input type="text" class="focus-ring flex-1 rounded-md border px-2 py-1 text-xs" placeholder="สิ่งสำคัญอันดับ 3"></li>
+           </ol>
+          </div>
+         </div>
+        </article><!-- Task List / Time Block -->
+        <article class="relative rounded-xl shadow-sm flex-1" aria-label="ส่วนรายการงานและตารางเวลา">
+         <div class="absolute inset-0 translate-x-[2px] translate-y-[2px] rounded-xl opacity-80 pointer-events-none" id="tl-shadow"></div>
+         <div class="relative rounded-xl border h-full flex flex-col overflow-hidden" id="tl-card">
+          <div class="px-4 py-2.5 flex items-center gap-2" id="tl-title-bar"><span aria-hidden="true">📝</span>
+           <h2 id="tl-title" class="text-xs font-semibold tracking-wide uppercase">รายการงาน / ตารางเวลา</h2>
+          </div>
+          <div class="px-4 pb-3 pt-3 flex-1 flex flex-col gap-1.5">
+           <ul class="space-y-1.5 text-xs">
+            <li class="flex items-center gap-2"><button type="button" class="focus-ring w-4 h-4 rounded border flex-shrink-0 flex items-center justify-center" data-role="square-checkbox" aria-label="เลือกงาน 1"></button> <input type="text" class="focus-ring flex-1 rounded-md border px-2 py-1 text-xs" placeholder="งาน 1 / ช่วงเวลา"></li>
+            <li class="flex items-center gap-2"><button type="button" class="focus-ring w-4 h-4 rounded border flex-shrink-0 flex items-center justify-center" data-role="square-checkbox" aria-label="เลือกงาน 2"></button> <input type="text" class="focus-ring flex-1 rounded-md border px-2 py-1 text-xs" placeholder="งาน 2 / ช่วงเวลา"></li>
+            <li class="flex items-center gap-2"><button type="button" class="focus-ring w-4 h-4 rounded border flex-shrink-0 flex items-center justify-center" data-role="square-checkbox" aria-label="เลือกงาน 3"></button> <input type="text" class="focus-ring flex-1 rounded-md border px-2 py-1 text-xs" placeholder="งาน 3 / ช่วงเวลา"></li>
+            <li class="flex items-center gap-2"><button type="button" class="focus-ring w-4 h-4 rounded border flex-shrink-0 flex items-center justify-center" data-role="square-checkbox" aria-label="เลือกงาน 4"></button> <input type="text" class="focus-ring flex-1 rounded-md border px-2 py-1 text-xs" placeholder="งาน 4 / ช่วงเวลา"></li>
+            <li class="flex items-center gap-2"><button type="button" class="focus-ring w-4 h-4 rounded border flex-shrink-0 flex items-center justify-center" data-role="square-checkbox" aria-label="เลือกงาน 5"></button> <input type="text" class="focus-ring flex-1 rounded-md border px-2 py-1 text-xs" placeholder="งาน 5 / ช่วงเวลา"></li>
+            <li class="flex items-center gap-2"><button type="button" class="focus-ring w-4 h-4 rounded border flex-shrink-0 flex items-center justify-center" data-role="square-checkbox" aria-label="เลือกงาน 6"></button> <input type="text" class="focus-ring flex-1 rounded-md border px-2 py-1 text-xs" placeholder="งาน 6 / ช่วงเวลา"></li>
+            <li class="flex items-center gap-2"><button type="button" class="focus-ring w-4 h-4 rounded border flex-shrink-0 flex items-center justify-center" data-role="square-checkbox" aria-label="เลือกงาน 7"></button> <input type="text" class="focus-ring flex-1 rounded-md border px-2 py-1 text-xs" placeholder="งาน 7 / ช่วงเวลา"></li>
+           </ul>
+          </div>
+         </div>
+        </article>
+       </section><!-- RIGHT COLUMN -->
+       <section aria-label="ร่างกายและการเติบโต" class="flex flex-col gap-4"><!-- Physical Health -->
+        <article class="relative rounded-xl shadow-sm" aria-label="ส่วนสุขภาพร่างกาย">
+         <div class="absolute inset-0 translate-x-[2px] translate-y-[2px] rounded-xl opacity-80 pointer-events-none" id="ph-shadow"></div>
+         <div class="relative rounded-xl border h-full flex flex-col overflow-hidden" id="ph-card">
+          <div class="px-4 py-2.5 flex items-center gap-2" id="ph-title-bar"><span aria-hidden="true">💪</span>
+           <h2 id="ph-title" class="text-xs font-semibold tracking-wide uppercase">สุขภาพร่างกาย</h2>
+          </div>
+          <div class="px-4 pb-3 pt-3 flex-1 flex flex-col gap-3 text-xs">
+           <div class="flex items-center gap-2"><span class="font-semibold">ออกกำลังกาย</span> <button type="button" class="focus-ring w-4 h-4 rounded border flex-shrink-0 flex items-center justify-center" data-role="square-checkbox" aria-label="ทำเครื่องหมายออกกำลังกายเสร็จ"></button> <input type="text" class="focus-ring w-14 rounded-md border px-2 py-1 text-xs" placeholder="นาที" aria-label="นาทีออกกำลังกาย"> <span>กิจกรรม</span> <input type="text" class="focus-ring flex-1 rounded-md border px-2 py-1 text-xs" placeholder="เช่น วิ่ง ยกน้ำหนัก" aria-label="กิจกรรมออกกำลังกาย">
+           </div><!-- Water -->
+           <div class="flex flex-col gap-1.5"><span class="text-xs font-semibold">ดื่มน้ำ</span>
+            <div class="flex flex-wrap gap-1.5 items-center" aria-label="การดื่มน้ำ">
+             <div class="flex gap-1.5"><button type="button" class="focus-ring w-5 h-5 rounded-full border flex items-center justify-center text-[10px]" data-role="water-unit" aria-label="แก้วน้ำ 1"></button> <button type="button" class="focus-ring w-5 h-5 rounded-full border flex items-center justify-center text-[10px]" data-role="water-unit" aria-label="แก้วน้ำ 2"></button> <button type="button" class="focus-ring w-5 h-5 rounded-full border flex items-center justify-center text-[10px]" data-role="water-unit" aria-label="แก้วน้ำ 3"></button> <button type="button" class="focus-ring w-5 h-5 rounded-full border flex items-center justify-center text-[10px]" data-role="water-unit" aria-label="แก้วน้ำ 4"></button> <button type="button" class="focus-ring w-5 h-5 rounded-full border flex items-center justify-center text-[10px]" data-role="water-unit" aria-label="แก้วน้ำ 5"></button> <button type="button" class="focus-ring w-5 h-5 rounded-full border flex items-center justify-center text-[10px]" data-role="water-unit" aria-label="แก้วน้ำ 6"></button> <button type="button" class="focus-ring w-5 h-5 rounded-full border flex items-center justify-center text-[10px]" data-role="water-unit" aria-label="แก้วน้ำ 7"></button> <button type="button" class="focus-ring w-5 h-5 rounded-full border flex items-center justify-center text-[10px]" data-role="water-unit" aria-label="แก้วน้ำ 8"></button>
+             </div>
+            </div>
+           </div><!-- Sleep -->
+           <div class="flex flex-wrap items-center gap-2"><span class="text-xs font-semibold">การนอนหลับ</span> <input type="text" class="focus-ring w-14 rounded-md border px-2 py-1 text-xs" placeholder="ชม." aria-label="ชั่วโมงการนอน"> <span class="text-xs opacity-80">คุณภาพการนอน</span> <select class="focus-ring rounded-md border px-2 py-1 text-xs" aria-label="คุณภาพการนอน"> <option>ดีมาก</option> <option>ดี</option> <option>พอใช้</option> <option>แย่</option> </select>
+           </div>
+          </div>
+         </div>
+        </article><!-- Growth / Reflection -->
+        <article class="relative rounded-xl shadow-sm flex-1" aria-label="ส่วนการเติบโตและสะท้อนความคิด">
+         <div class="absolute inset-0 translate-x-[2px] translate-y-[2px] rounded-xl opacity-80 pointer-events-none" id="gr-shadow"></div>
+         <div class="relative rounded-xl border h-full flex flex-col overflow-hidden" id="gr-card">
+          <div class="px-4 py-2.5 flex items-center gap-2" id="gr-title-bar"><span aria-hidden="true">📓</span>
+           <h2 id="gr-title" class="text-xs font-semibold tracking-wide uppercase">การเติบโต / สะท้อนความคิด</h2>
+          </div>
+          <div class="px-4 pb-3 pt-3 flex-1 flex flex-col gap-2 text-xs"><label for="growth-notes" id="gr-prompt" class="text-xs opacity-90"> ชิงชัย บทเรียน การเปลี่ยนแปลงความคิด: </label> <textarea id="growth-notes" class="focus-ring w-full h-full rounded-md border px-2.5 py-1.5 text-xs resize-none"></textarea>
+          </div>
+         </div>
+        </article>
+       </section>
+      </div>
+     </section><!-- Footer -->
+     <footer class="w-full px-8 py-3 border-t text-[11px] flex items-center justify-between gap-4">
+      <p id="footer-note" class="opacity-80">ก้าวเล็กๆ ทุกวันนำไปสู่การเปลี่ยนแปลงครั้งใหญ่</p>
+      <p class="opacity-60 text-right">ออกแบบเพื่อการพัฒนาตนเองของคุณ</p>
+     </footer>
+    </main>
+   </div>
+  </div>
+  <script>
+    (function () {
+      const defaultConfig = {
+        background_color: "#fef9f3",
+        surface_color: "#ffffff",
+        text_color: "#2d2d2d",
+        primary_action_color: "#c19a6b",
+        secondary_action_color: "#e0e0e0",
+        font_family: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        font_size: 14,
+        main_title: "โปรแกรมพัฒนาตนเองรายวัน",
+        subtitle: "สร้างนิสัยดี ฝึกจิตใจ เสริมสร้างร่างกาย",
+        morning_mindset_title: "จิตใจยามเช้า",
+        morning_mindset_prompt: "วันนี้ฉันขอบคุณสำหรับ:",
+        laser_focus_title: "สิ่งสำคัญ 3 อันดับแรก",
+        task_list_title: "รายการงาน / ตารางเวลา",
+        physical_health_title: "สุขภาพร่างกาย",
+        growth_title: "การเติบโต / สะท้อนความคิด",
+        growth_prompt: "ชิงชัย บทเรียน การเปลี่ยนแปลงความคิด:",
+        footer_note: "ก้าวเล็กๆ ทุกวันนำไปสู่การเปลี่ยนแปลงครั้งใหญ่"
+      };
+
+      async function onConfigChange(config) {
+        const cfg = Object.assign({}, defaultConfig, config || {});
+        const root = document.getElementById("planner-root");
+        const card = document.getElementById("planner-card");
+        if (!root || !card) return;
+
+        const baseFontStack = "Arial, sans-serif";
+        const fontFamily = cfg.font_family + ", " + baseFontStack;
+        const baseSize = Number(cfg.font_size) || defaultConfig.font_size;
+
+        root.style.backgroundColor = cfg.background_color;
+        card.style.backgroundColor = cfg.surface_color;
+        card.style.color = cfg.text_color;
+
+        const shadowEls = ["mm-shadow","lf-shadow","tl-shadow","ph-shadow","gr-shadow"];
+        shadowEls.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.style.backgroundColor = cfg.secondary_action_color;
+        });
+
+        const titleBars = ["mm-title-bar","lf-title-bar","tl-title-bar","ph-title-bar","gr-title-bar"];
+        titleBars.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.style.backgroundColor = cfg.primary_action_color;
+            el.style.color = "#ffffff";
+          }
+        });
+
+        const cardIds = ["mm-card","lf-card","tl-card","ph-card","gr-card"];
+        cardIds.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.style.backgroundColor = cfg.surface_color;
+            el.style.borderColor = cfg.primary_action_color;
+          }
+        });
+
+        const titleEl = document.getElementById("main-title");
+        const subtitleEl = document.getElementById("subtitle-text");
+        const footerNote = document.getElementById("footer-note");
+        if (titleEl) {
+          titleEl.style.fontFamily = fontFamily;
+          titleEl.style.fontSize = (baseSize * 1.6) + "px";
+          titleEl.textContent = cfg.main_title;
+        }
+        if (subtitleEl) {
+          subtitleEl.style.fontFamily = fontFamily;
+          subtitleEl.style.fontSize = (baseSize * 0.85) + "px";
+          subtitleEl.textContent = cfg.subtitle;
+        }
+        if (footerNote) {
+          footerNote.style.fontFamily = fontFamily;
+          footerNote.style.fontSize = (baseSize * 0.8) + "px";
+          footerNote.textContent = cfg.footer_note;
+        }
+
+        const mmTitle = document.getElementById("mm-title");
+        const lfTitle = document.getElementById("lf-title");
+        const tlTitle = document.getElementById("tl-title");
+        const phTitle = document.getElementById("ph-title");
+        const grTitle = document.getElementById("gr-title");
+        const mmPrompt = document.getElementById("mm-prompt");
+        const grPrompt = document.getElementById("gr-prompt");
+
+        if (mmTitle) {
+          mmTitle.textContent = cfg.morning_mindset_title;
+          mmTitle.style.fontFamily = fontFamily;
+          mmTitle.style.fontSize = (baseSize * 0.9) + "px";
+        }
+        if (lfTitle) {
+          lfTitle.textContent = cfg.laser_focus_title;
+          lfTitle.style.fontFamily = fontFamily;
+          lfTitle.style.fontSize = (baseSize * 0.9) + "px";
+        }
+        if (tlTitle) {
+          tlTitle.textContent = cfg.task_list_title;
+          tlTitle.style.fontFamily = fontFamily;
+          tlTitle.style.fontSize = (baseSize * 0.9) + "px";
+        }
+        if (phTitle) {
+          phTitle.textContent = cfg.physical_health_title;
+          phTitle.style.fontFamily = fontFamily;
+          phTitle.style.fontSize = (baseSize * 0.9) + "px";
+        }
+        if (grTitle) {
+          grTitle.textContent = cfg.growth_title;
+          grTitle.style.fontFamily = fontFamily;
+          grTitle.style.fontSize = (baseSize * 0.9) + "px";
+        }
+        if (mmPrompt) {
+          mmPrompt.textContent = cfg.morning_mindset_prompt;
+          mmPrompt.style.fontFamily = fontFamily;
+          mmPrompt.style.fontSize = (baseSize * 0.8) + "px";
+          mmPrompt.style.color = cfg.text_color;
+        }
+        if (grPrompt) {
+          grPrompt.textContent = cfg.growth_prompt;
+          grPrompt.style.fontFamily = fontFamily;
+          grPrompt.style.fontSize = (baseSize * 0.8) + "px";
+          grPrompt.style.color = cfg.text_color;
+        }
+
+        const textNodes = document.querySelectorAll("label, input, textarea, select, button, li, p, span, h2");
+        textNodes.forEach(node => {
+          node.style.fontFamily = fontFamily;
+        });
+
+        const smallTextNodes = document.querySelectorAll("label, input, textarea, select, button, li, span, p");
+        smallTextNodes.forEach(node => {
+          node.style.fontSize = (baseSize * 0.85) + "px";
+          if (!node.closest("#main-title")) {
+            node.style.color = cfg.text_color;
+          }
+        });
+
+        const circleCheckboxes = document.querySelectorAll('[data-role="circle-checkbox"]');
+        circleCheckboxes.forEach(btn => {
+          if (!btn.dataset.bound) {
+            btn.dataset.bound = "true";
+            btn.addEventListener("click", () => {
+              const active = btn.getAttribute("data-active") === "true";
+              if (active) {
+                btn.removeAttribute("data-active");
+                btn.style.backgroundColor = "transparent";
+                btn.style.borderColor = cfg.secondary_action_color;
+                btn.textContent = "";
+              } else {
+                btn.setAttribute("data-active", "true");
+                btn.style.backgroundColor = cfg.primary_action_color;
+                btn.style.borderColor = cfg.primary_action_color;
+                btn.textContent = "✓";
+                btn.style.color = "#ffffff";
+              }
+            });
+          }
+          if (btn.getAttribute("data-active") !== "true") {
+            btn.style.backgroundColor = "transparent";
+            btn.style.borderColor = cfg.secondary_action_color;
+            btn.textContent = "";
+          }
+        });
+
+        const squareCheckboxes = document.querySelectorAll('[data-role="square-checkbox"]');
+        squareCheckboxes.forEach(btn => {
+          if (!btn.dataset.bound) {
+            btn.dataset.bound = "true";
+            btn.addEventListener("click", () => {
+              const active = btn.getAttribute("data-active") === "true";
+              if (active) {
+                btn.removeAttribute("data-active");
+                btn.style.backgroundColor = "transparent";
+                btn.style.borderColor = cfg.secondary_action_color;
+                btn.textContent = "";
+              } else {
+                btn.setAttribute("data-active", "true");
+                btn.style.backgroundColor = cfg.primary_action_color;
+                btn.style.borderColor = cfg.primary_action_color;
+                btn.textContent = "✓";
+                btn.style.color = "#ffffff";
+              }
+            });
+          }
+          if (btn.getAttribute("data-active") !== "true") {
+            btn.style.backgroundColor = "transparent";
+            btn.style.borderColor = cfg.secondary_action_color;
+            btn.textContent = "";
+          }
+        });
+
+        const waterUnits = document.querySelectorAll('[data-role="water-unit"]');
+        waterUnits.forEach(btn => {
+          if (!btn.dataset.bound) {
+            btn.dataset.bound = "true";
+            btn.addEventListener("click", () => {
+              const active = btn.getAttribute("data-active") === "true";
+              if (active) {
+                btn.removeAttribute("data-active");
+                btn.style.backgroundColor = "transparent";
+                btn.style.borderColor = cfg.secondary_action_color;
+              } else {
+                btn.setAttribute("data-active", "true");
+                btn.style.backgroundColor = cfg.primary_action_color;
+                btn.style.borderColor = cfg.primary_action_color;
+              }
+            });
+          }
+          if (btn.getAttribute("data-active") !== "true") {
+            btn.style.backgroundColor = "transparent";
+            btn.style.borderColor = cfg.secondary_action_color;
+          }
+        });
+
+        const allInputs = document.querySelectorAll("input, textarea, select");
+        allInputs.forEach(el => {
+          el.style.borderColor = cfg.secondary_action_color;
+          el.style.backgroundColor = cfg.surface_color;
+        });
+      }
+
+      function mapToCapabilities(config) {
+        const cfg = Object.assign({}, defaultConfig, config || {});
+        return {
+          recolorables: [
+            {
+              get: () => cfg.background_color,
+              set: (value) => {
+                if (!window.elementSdk) return;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => cfg.surface_color,
+              set: (value) => {
+                if (!window.elementSdk) return;
+                window.elementSdk.setConfig({ surface_color: value });
+              }
+            },
+            {
+              get: () => cfg.text_color,
+              set: (value) => {
+                if (!window.elementSdk) return;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => cfg.primary_action_color,
+              set: (value) => {
+                if (!window.elementSdk) return;
+                window.elementSdk.setConfig({ primary_action_color: value });
+              }
+            },
+            {
+              get: () => cfg.secondary_action_color,
+              set: (value) => {
+                if (!window.elementSdk) return;
+                window.elementSdk.setConfig({ secondary_action_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => cfg.font_family,
+            set: (value) => {
+              if (!window.elementSdk) return;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          },
+          fontSizeable: {
+            get: () => cfg.font_size,
+            set: (value) => {
+              if (!window.elementSdk) return;
+              const size = typeof value === "number" ? value : parseFloat(value);
+              if (!isNaN(size)) {
+                window.elementSdk.setConfig({ font_size: size });
+              }
+            }
+          }
+        };
+      }
+
+      function mapToEditPanelValues(config) {
+        const cfg = Object.assign({}, defaultConfig, config || {});
+        return new Map([
+          ["main_title", cfg.main_title],
+          ["subtitle", cfg.subtitle],
+          ["morning_mindset_title", cfg.morning_mindset_title],
+          ["morning_mindset_prompt", cfg.morning_mindset_prompt],
+          ["laser_focus_title", cfg.laser_focus_title],
+          ["task_list_title", cfg.task_list_title],
+          ["physical_health_title", cfg.physical_health_title],
+          ["growth_title", cfg.growth_title],
+          ["growth_prompt", cfg.growth_prompt],
+          ["footer_note", cfg.footer_note]
+        ]);
+      }
+
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange,
+          mapToCapabilities,
+          mapToEditPanelValues
+        });
+      } else {
+        onConfigChange(defaultConfig);
+      }
+    })();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ab36799c37445ba',t:'MTc2NTI3MTc5Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
